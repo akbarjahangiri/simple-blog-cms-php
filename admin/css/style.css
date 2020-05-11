@@ -1,0 +1,7 @@
+.nowrap {
+    white-space: nowrap;
+}
+.td-word-break {
+    word-break: break-all;
+    width: 30%;
+}
