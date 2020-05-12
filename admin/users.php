@@ -42,19 +42,20 @@ include "includes/admin-header.php";
                         }
 
                         switch ($source) {
-                            case "add_post":
-                                include "includes/add_post.php";
+
+
+                            case "delete":
+                                $id = $_GET['id'];
+                                deleteUser($id);
                                 break;
                             case "edit":
-                                include "includes/edit_posts.php";
-                                break;
-                            case "delete":
-                                $deleteId = $_GET['id'];
-                                deletePost($deleteId) ;
+                                $id = $_GET['id'];
+                                include "includes/edit_User.php";
                                 break;
 
+
                             default:
-                                include "includes/view_all_posts.php";
+                                include "includes/view_all_users.php";
                                 break;
 
                         }

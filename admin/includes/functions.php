@@ -8,6 +8,16 @@ function testQuery($result)
     }
 }
 
+//validate and reform input data
+function testInput($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
+//create new category
 function insertCategory()
 {
     if (isset($_POST['category_title'])) {
@@ -26,6 +36,7 @@ function insertCategory()
     }
 }
 
+// return all categories list table in categories.php
 function allCategories()
 {
     global $connection;
@@ -50,6 +61,7 @@ function allCategories()
     }
 }
 
+//return all categories as array
 function allCategoriesList()
 {
     global $connection;
@@ -66,6 +78,7 @@ function allCategoriesList()
 
 //----------------------------------------------posts functions---------------------------------
 
+//return all posts as array
 function allPosts()
 {
     global $connection;
@@ -183,7 +196,7 @@ function showUpdatePost($postId)
 
 }
 
-function updatePost()
+function editPost()
 {
 
     global $connection;
@@ -307,18 +320,79 @@ function allComments()
 //approve comment
 function approveComment($id)
 {
-global $connection;
-$sql = "UPDATE comments SET status = 'approved' WHERE id = $id ";
-$approveQuery = mysqli_query($connection,$sql);
+    global $connection;
+    $sql = "UPDATE comments SET status = 'approved' WHERE id = $id ";
+    $approveQuery = mysqli_query($connection, $sql);
     header('Location: ' . $_SERVER['HTTP_REFERER']);
 }
 
 //unapprove comment
 function unapproveComment($id)
 {
-global $connection;
-$sql = "UPDATE comments SET status = 'unapproved' WHERE id = $id ";
-$approveQuery = mysqli_query($connection,$sql);
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    global $connection;
+    $sql = "UPDATE comments SET status = 'unapproved' WHERE id = $id ";
+    $approveQuery = mysqli_query($connection, $sql);
+    header('Location: comments.php');
 }
 
+/*-------------------------Users manage  functions-------------------------*/
+
+//return all users
+function allUsers()
+{
+    global $connection;
+    $users = array();
+    $sql = "SELECT * FROM users";
+    $userQuery = mysqli_query($connection, $sql);
+    testQuery($userQuery);
+    if (mysqli_num_rows($userQuery) > 0) {
+        while ($row = mysqli_fetch_assoc($userQuery)) {
+            $users[] = $row;
+        }
+    }
+    return $users;
+}
+
+//delete user by id
+function deleteUser($id)
+{
+    global $connection;
+    $sql = "DELETE FROM users WHERE id = $id";
+    //delete image from storage
+    mysqli_query($connection, $sql);
+    header('Location:  users.php');
+
+}
+
+//return user data to edit page
+function showUserEdit($id)
+{
+    global $connection;
+    $user = array();
+    $sql = "SELECT * FROM users WHERE id = $id";
+    $userQuery = mysqli_query($connection, $sql);
+    testQuery($userQuery);
+    if (mysqli_num_rows($userQuery) > 0) {
+        while ($row = mysqli_fetch_assoc($userQuery)) {
+            $user = $row;
+        }
+    }
+    return $user;
+}
+
+//edit and update user
+function updateUser()
+{
+    global $connection;
+    $id = testInput($_GET['id']);
+    $username = testInput($_POST['username']);
+    $firstname = testInput($_POST['firstname']);
+    $lastname = testInput($_POST['lastname']);
+    $role = testInput($_POST['role']);
+    $password = testInput($_POST['password']);
+
+    $sql = "UPDATE users SET username = '$username' , firstname = '$firstname', lastname = '$lastname', role = '$role', password = '$password' WHERE id = $id";
+    $updateQuery = mysqli_query($connection, $sql);
+    header('Location: users.php');
+
+}

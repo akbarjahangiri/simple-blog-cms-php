@@ -50,7 +50,7 @@ include "includes/admin-header.php"; ?>
                         <!----------UPDATE CATEGORIES-->
                         <?php
                         if (isset($_GET['edit'])) {
-                            include "includes/update_categories.php";
+                            include "includes/edit_categories.php";
                         }
                         ?>
                     </div>

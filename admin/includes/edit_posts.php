@@ -1,11 +1,10 @@
 <?php
 if (isset($_POST['updatePost'])) {
-    $errors = updatePost();
+    $errors = editPost();
 }
 $id = mysqli_escape_string($connection, $_GET['id']);
 $post = showUpdatePost($id);
 $categories = allCategoriesList();
-print_r($post);
 ?>
 
 <div class="col-xs-12 center-block">
