@@ -27,27 +27,27 @@
                     <?php
                     $query = "SELECT * FROM categories LIMIT  6";
                     $categories = mysqli_query($connection, $query) or die(mysql_error());
-//                    if (!mysqli_fetch_assoc($categories)){
-//
-//                    }else{
-                        while ( $rows  = mysqli_fetch_assoc($categories)){
-                            $title = $rows['title'];
-                            $id = $rows['id'];
-                            ?>
-                            <li><a href="category.php?id=<?php echo $id; ?>"><?php echo $title ?></a>
-                            </li>
-                    <?php
+                    //                    if (!mysqli_fetch_assoc($categories)){
+                    //
+                    //                    }else{
+                    while ($rows = mysqli_fetch_assoc($categories)) {
+                        $title = $rows['title'];
+                        $id = $rows['id'];
+                        ?>
+                        <li><a href="category.php?id=<?php echo $id; ?>"><?php echo $title ?></a>
+                        </li>
+                        <?php
 
 //                        }
                     }
                     ?>
 
-<!--                    <li><a href="#">Category Name</a>-->
-<!--                    </li>-->
-<!--                    <li><a href="#">Category Name</a>-->
-<!--                    </li>-->
-<!--                    <li><a href="#">Category Name</a>-->
-<!--                    </li>-->
+                    <!--                    <li><a href="#">Category Name</a>-->
+                    <!--                    </li>-->
+                    <!--                    <li><a href="#">Category Name</a>-->
+                    <!--                    </li>-->
+                    <!--                    <li><a href="#">Category Name</a>-->
+                    <!--                    </li>-->
                 </ul>
             </div>
             <!-- /.col-lg-6 -->
@@ -57,11 +57,26 @@
         <!-- /.row -->
     </div>
 
-    <!-- Side Widget Well -->
-    <div class="well">
-        <h4>Side Widget Well</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus
-            laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
-    </div>
+    <?php if (!isset($_SESSION['auth'])) { ?>
+        <!-- Side Widget Well -->
+        <div class="well">
+            <h4>login</h4>
+            <p class="bg-danger"><?php if (isset($_SESSION['autherror'])) {
+                    echo $_SESSION['autherror'];
+                    unset($_SESSION['autherror']);
+                } ?></p>
+            <form action="includes/login.php" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="username" name="username">
+
+                </div>
+                <div class="input-group">
+                    <input type="password" class="form-control" placeholder="password" name="password">
+                    <span class="input-group-btn"><button class="btn btn-primary" name="login">login</button></span>
+
+                </div>
+            </form>
+        </div>
+    <?php } ?>
 
 </div>

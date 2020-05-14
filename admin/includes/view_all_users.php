@@ -2,7 +2,6 @@
     <br>
     <br>
     <?php
-    session_start();
     //     echo $data['id'];
     if (isset($_SESSION['error'])) {
         echo $_SESSION['error'];
@@ -32,6 +31,7 @@
     //------------------ALL CATEGORIES SECTION -------------------------------------------------
     $users = allUsers();
     foreach ($users as $user) {
+        $image_path = $user['image_path'];
         echo "<tr>";
         echo "<td>" . $user['id'] . "</td>";
         echo "<td >" . $user['username'] . "</td>";
@@ -39,7 +39,7 @@
         echo "<td>" . $user['lastname'] . "</td>";
         echo "<td>" . $user['email'] . "</td>";
         echo "<td>" . $user['role'] . "</td>";
-        echo "<td>" . $user['image_path'] . "</td>";
+        echo "<td><img class='img-responsive' width='100' src='$image_path' alt=''></td>";
 
         echo "<td>" . "<a href='users.php?source=delete&id=" . $user['id'] . "' class='btn btn-danger'>Delete</a> " ."</td>";
         echo "<td>" . " <a href='users.php?source=edit&id=" . $user['id'] . "' class='btn btn-success'>Edit</a>" . "</td>";

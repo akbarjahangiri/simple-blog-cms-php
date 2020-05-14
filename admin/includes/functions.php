@@ -357,6 +357,12 @@ function allUsers()
 function deleteUser($id)
 {
     global $connection;
+    $userOldData = userOldData($id);
+
+    //check and delete old image from storage
+    if (!empty($userOldData['image_path'])) {
+        unlink(unlink($userOldData['image_path']));
+    }
     $sql = "DELETE FROM users WHERE id = $id";
     //delete image from storage
     mysqli_query($connection, $sql);
@@ -380,19 +386,69 @@ function showUserEdit($id)
     return $user;
 }
 
+function userData($id)
+{
+    global $connection;
+    $user = array();
+    $sql = "SELECT * FROM users WHERE id =$id";
+    $userQuery = mysqli_query($connection, $sql);
+    if (mysqli_num_rows($userQuery)) {
+        while ($row = mysqli_fetch_assoc($userQuery)) {
+            $user = $row;
+        }
+    }
+    return $user;
+
+}
+
 //edit and update user
 function updateUser()
 {
     global $connection;
+    global $errors;
     $id = testInput($_GET['id']);
+    $userOldData = userData($id);
+    $allowextension = array("jpg", "jpeg", "png");
+
     $username = testInput($_POST['username']);
     $firstname = testInput($_POST['firstname']);
     $lastname = testInput($_POST['lastname']);
     $role = testInput($_POST['role']);
     $password = testInput($_POST['password']);
 
-    $sql = "UPDATE users SET username = '$username' , firstname = '$firstname', lastname = '$lastname', role = '$role', password = '$password' WHERE id = $id";
+    $sql = "UPDATE users SET username = '$username' , firstname = '$firstname', lastname = '$lastname', role = '$role', password = '$password' ";
+
+    if (!empty($_FILES['image_path']['tmp_name'])) {
+        //check and delete old image from storage
+        if (!empty($userOldData['image_path'])) {
+            unlink(unlink($userOldData['image_path']));
+        }
+
+        $extention = explode(".", $_FILES['image_path']['name']);
+        $extention = end($extention);
+        if (in_array($extention, $allowextension)) {
+            if ($_FILES['image_path']['error'] == 0) {
+
+                $randnum = rand(1, 10000000);
+                $query_image_path = "images/users/" . $randnum . "-" . $_FILES['image_path']['name'];
+                $image_path = "images/users/" . $randnum . "-" . $_FILES['image_path']['name'];
+                move_uploaded_file($_FILES['image_path']['tmp_name'], $image_path);
+
+            } else {
+                array_push($errors, "Error in uploading file");
+            }
+        } else {
+            array_push($errors, "image format must be: jpeg , jpg , png");
+        }
+
+        $sql .= ",image_path ='$query_image_path'";
+    }
+
+    $sql .= " WHERE id = $id";
+
     $updateQuery = mysqli_query($connection, $sql);
+    $_SESSION['errors'] = $errors;
     header('Location: users.php');
 
 }
+

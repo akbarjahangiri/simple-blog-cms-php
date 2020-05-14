@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['updateUser'])) {
-     updateUser();
+        updateUser();
 }
 $id = mysqli_escape_string($connection, $_GET['id']);
 $user = showUserEdit($id);
@@ -50,16 +50,24 @@ $user = showUserEdit($id);
                     <input type="text" class="form-control" name="password" value="<?php echo $user['password'] ?>">
                 </div>
                 <div class="form-group">
+                    <label for="role">role</label>
+                    <select class="form-control" name="role" id="role">
+<!--                        <option value="--><?php //echo $user['role']?><!--" selected>--><?php //echo $user['role']?><!--</option>-->
+                        <option value="admin" <?php if ($user['role'] =='admin'){echo "selected";} ?>>Admin</option>
+                        <option value="user" <?php if ($user['role'] =='user'){echo "selected";} ?>>user</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <div class="row">
                         <div class="col-xs-12">
                             <label for="title">old image:</label>
 
                         </div>
                         <div class="col-xs-12">
-                            <img width="100" src="../<?php echo $user['image_path'] ?>">
+                            <img width="100" src="<?php echo $user['image_path'] ?>">
                         </div>
                         <div class="col-xs-12">
-                            <label for="title">uplad new image:</label>
+                            <label for="title">upload new image:</label>
 
                         </div>
                         <div class="col-xs-12">

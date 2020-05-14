@@ -1,5 +1,6 @@
 <?php
 ob_start();
+session_start();
 include "includes/admin-header.php";
 ?>
 
@@ -23,6 +24,7 @@ include "includes/admin-header.php";
                     <h1 class="page-header">
                         Welcome
                         <small>Akbar</small>
+
                     </h1>
                     <ol class="breadcrumb">
                         <li>

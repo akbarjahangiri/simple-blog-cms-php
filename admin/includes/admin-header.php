@@ -1,7 +1,13 @@
 <?php
 ob_start();
+session_start();
 include "../includes/db.php";
 include "functions.php";
+
+//redirect to index.php if user not logged in
+if (!isset($_SESSION['auth'])){
+    header('Location: ../index.php');
+}
 ?>
 
 <!DOCTYPE html>

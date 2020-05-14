@@ -1,4 +1,14 @@
 <?php
+
+
+//validate and reform input data
+function testInput($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
 /*return a post data from database as array*/
 function postData($id)
 {
@@ -82,4 +92,19 @@ function showComments($id)
     if (!empty($comments)) {
         return $comments;
     }
+}
+
+function userDataByUsername($username)
+{
+    global $connection;
+    $user = array();
+    $sql = "SELECT * FROM users WHERE username ='$username'";
+    $userQuery = mysqli_query($connection, $sql);
+    if (mysqli_num_rows($userQuery)) {
+        while ($row = mysqli_fetch_assoc($userQuery)) {
+            $user = $row;
+        }
+    }
+    return $user;
+
 }
