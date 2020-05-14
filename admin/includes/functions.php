@@ -452,3 +452,99 @@ function updateUser()
 
 }
 
+
+//update profile
+function updateProfile($id)
+{
+    global $connection;
+    global $errors;
+    $userOldData = userData($id);
+    $allowextension = array("jpg", "jpeg", "png");
+
+    $username = testInput($_POST['username']);
+    $firstname = testInput($_POST['firstname']);
+    $lastname = testInput($_POST['lastname']);
+    $password = testInput($_POST['password']);
+
+    $sql = "UPDATE users SET username = '$username' , firstname = '$firstname', lastname = '$lastname', password = '$password' ";
+
+    if (!empty($_FILES['image_path']['tmp_name'])) {
+        //check and delete old image from storage
+        if (!empty($userOldData['image_path'])) {
+            unlink(unlink($userOldData['image_path']));
+        }
+
+        $extention = explode(".", $_FILES['image_path']['name']);
+        $extention = end($extention);
+        if (in_array($extention, $allowextension)) {
+            if ($_FILES['image_path']['error'] == 0) {
+
+                $randnum = rand(1, 10000000);
+                $query_image_path = "images/users/" . $randnum . "-" . $_FILES['image_path']['name'];
+                $image_path = "images/users/" . $randnum . "-" . $_FILES['image_path']['name'];
+                move_uploaded_file($_FILES['image_path']['tmp_name'], $image_path);
+
+            } else {
+                array_push($errors, "Error in uploading file");
+            }
+        } else {
+            array_push($errors, "image format must be: jpeg , jpg , png");
+        }
+
+        $sql .= ",image_path ='$query_image_path'";
+    }
+
+    $sql .= " WHERE id = $id";
+
+    $updateQuery = mysqli_query($connection, $sql);
+    $_SESSION['errors'] = $errors;
+    header('Location: profile.php');
+}
+
+// add new user
+function addUser()
+{
+    global $connection;
+    global $errors;
+    $allowextension = array("jpg", "jpeg", "png");
+
+    $username = testInput($_POST['username']);
+    $firstname = testInput($_POST['firstname']);
+    $email = testInput($_POST['email']);
+    $role = testInput($_POST['role']);
+    $lastname = testInput($_POST['lastname']);
+    $password = testInput($_POST['password']);
+
+
+    if (!empty($_FILES['image_path']['tmp_name'])) {
+
+        $extention = explode(".", $_FILES['image_path']['name']);
+        $extention = end($extention);
+        if (in_array($extention, $allowextension)) {
+            if ($_FILES['image_path']['error'] == 0) {
+
+                $randnum = rand(1, 10000000);
+                $query_image_path = "images/users/" . $randnum . "-" . $_FILES['image_path']['name'];
+                $image_path = "images/users/" . $randnum . "-" . $_FILES['image_path']['name'];
+                move_uploaded_file($_FILES['image_path']['tmp_name'], $image_path);
+
+            } else {
+                array_push($errors, "Error in uploading file");
+            }
+        } else {
+            array_push($errors, "image format must be: jpeg , jpg , png");
+        }
+
+    }
+    if (isset($query_image_path)) {
+        $sql = "INSERT INTO users(username, password, firstname, lastname, email, role ,image_path) ";
+        $sql .= "VALUES('$username', '$password', '$firstname','$lastname', '$email', '$role','$query_image_path' )";
+    } else {
+        $sql = "INSERT INTO users(username, password, firstname, lastname, email, role ,image_path) ";
+        $sql .= "VALUES('$username', '$password', '$firstname','$lastname', '$email', '$role','' )";
+    }
+
+    $addQuery = mysqli_query($connection, $sql);
+    $_SESSION['errors'] = $errors;
+    header('Location: users.php');
+}

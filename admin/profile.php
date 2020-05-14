@@ -3,7 +3,6 @@ ob_start();
 include "includes/admin-header.php";
 ?>
 
-
     <body>
 
 <div id="wrapper">
@@ -22,7 +21,7 @@ include "includes/admin-header.php";
                 <div class="col-xs-12">
                     <h1 class="page-header">
                         Welcome
-                        <small>Akbar</small>
+                        <small><?php  echo $_SESSION['username'];?></small>
 
                     </h1>
                     <ol class="breadcrumb">
@@ -44,22 +43,10 @@ include "includes/admin-header.php";
 
                         switch ($source) {
 
-
-                            case "delete":
-                                $id = $_GET['id'];
-                                deleteUser($id);
-                                break;
-                            case "edit":
-                                $id = $_GET['id'];
-                                include "includes/edit_User.php";
-                                break;
-                            case "add_user":
-                                include "includes/add_User.php";
-                                break;
-
+                            
 
                             default:
-                                include "includes/view_all_users.php";
+                                include "includes/view_profile.php";
                                 break;
 
                         }

@@ -9,7 +9,8 @@ if (isset($_POST['login'])) {
     $user = userDataByUsername($username);
     if ($user['username'] === $username && $user['password'] === $password){
         $_SESSION['auth'] = "true";
-        $_SESSION['admin'] = $user['username'];
+        $_SESSION['authId'] = $user['id'];
+        $_SESSION['username'] = $user['username'];
         $_SESSION['role'] = $user['role'];
         header( 'Location: ../admin');
     }

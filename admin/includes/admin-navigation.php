@@ -17,11 +17,12 @@
 
 
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b
-                    class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                        class="fa fa-user"></i> <?php echo $_SESSION['username']; ?> <b
+                        class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                    <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
                 </li>
 
 
@@ -42,10 +43,10 @@
 
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#posts_dropdown"><i
-                        class="fa fa-fw fa-archive"></i> Posts <i
-                        class="fa fa-fw fa-caret-down"></i></a>
+                            class="fa fa-fw fa-archive"></i> Posts <i
+                            class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="posts_dropdown" class="collapse">
-                    <li >
+                    <li>
                         <a href="posts.php">View all posts</a>
                     </li>
                     <li>
@@ -56,27 +57,31 @@
             <li>
                 <a href="categories.php"><i class="fa fa-fw fa-cube"></i> Categories</a>
             </li>
+            <?php if ($_SESSION['role'] == 'admin') {
+                ?>
+                <li>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#users_dropdown"><i
+                                class="fa fa-fw fa-users"></i> Users <i
+                                class="fa fa-fw fa-caret-down"></i></a>
+                    <ul id="users_dropdown" class="collapse">
+                        <li>
+                            <a href="users.php">Users list</a>
+                        </li>
+                        <li>
+                            <a href="users.php?source=add_user">Add User</a>
+                        </li>
+                    </ul>
+                </li>
+                <?php
+            } ?>
             <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#users_dropdown"><i
-                        class="fa fa-fw fa-users"></i> Users <i
-                        class="fa fa-fw fa-caret-down"></i></a>
-                <ul id="users_dropdown" class="collapse">
-                    <li>
-                        <a href="users.php">Users list</a>
-                    </li>
-                    <li>
-                        <a href="#">Add User</a>
-                    </li>
-                </ul>
-            </li>
-            <li >
                 <a href="comments.php"><i class="fa fa-fw fa-comments"></i> Comments</a>
             </li>
             <li>
                 <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
             </li>
             <li>
-                <a href="blank-page.html"><i class="fa fa-fw fa-user"></i> Profile</a>
+                <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
             </li>
         </ul>
     </div>
