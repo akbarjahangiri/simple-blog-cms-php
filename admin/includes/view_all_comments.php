@@ -2,7 +2,6 @@
     <br>
     <br>
     <?php
-    session_start();
     //     echo $data['id'];
     if (isset($_SESSION['error'])) {
         echo $_SESSION['error'];
