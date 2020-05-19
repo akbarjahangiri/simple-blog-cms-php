@@ -91,6 +91,34 @@ function allPosts()
     return $posts;
 }
 
+//all_posts.php select action function
+function allPostsAction($action)
+{
+    global $connection;
+
+    switch ($action) {
+        case 'approve':
+            foreach ($_POST['postCheckBox'] as $postid) {
+                $sql = "UPDATE posts SET status= 'approved' WHERE id=$postid ";
+                mysqli_query($connection, $sql);
+            }
+            break;
+        case 'draft':
+            foreach ($_POST['postCheckBox'] as $postid) {
+                $sql = "UPDATE posts SET status= 'draft' WHERE id=$postid ";
+                mysqli_query($connection, $sql);
+            }
+            break;
+        case 'delete':
+            foreach ($_POST['postCheckBox'] as $postid) {
+                deletePost($postid);
+            }
+            break;
+    }
+
+
+}
+
 function createPost()
 {
     global $connection;
@@ -550,41 +578,41 @@ function addUser()
 }
 
 //return data from users posts and comments to plot on chart
-    function chartData()
-    {
-        global $connection;
+function chartData()
+{
+    global $connection;
 
-        //user part
-        $totalUsersSql = "SELECT * FROM users";
-        $totalUsersQuery = mysqli_query($connection, $totalUsersSql);
-        $totalUsersCount = mysqli_num_rows($totalUsersQuery);
-        $chartData['usersCount'] = $totalUsersCount;
-
-
-        //comments part
-        $totalCommentsSql = "SELECT * FROM comments";
-        $totalCommentsQuery = mysqli_query($connection, $totalCommentsSql);
-        $totalCommentsCount = mysqli_num_rows($totalCommentsQuery);
-        $chartData['commentsCount'] = $totalCommentsCount;
-
-        $approvedCommentsSql = "SELECT * FROM comments WHERE status ='approved' ";
-        $approvedCommentsQuery = mysqli_query($connection, $approvedCommentsSql);
-        $approvedCommentsCount = mysqli_num_rows($approvedCommentsQuery);
-        $chartData['approvedCommentsCount'] = $approvedCommentsCount;
-
-        //posts part
-        $totalPostsSql = "SELECT * FROM posts";
-        $totalPostsQuery = mysqli_query($connection, $totalPostsSql);
-        $totalPostsCount = mysqli_num_rows($totalPostsQuery);
-        $chartData['postsCount'] = $totalPostsCount;
-
-        $publishedPostsSql = "SELECT * FROM posts WHERE status ='published' ";
-        $publishedPostsQuery = mysqli_query($connection, $publishedPostsSql);
-        $publishedPostsCount = mysqli_num_rows($publishedPostsQuery);
-            $chartData['publishedPostsCount'] = $publishedPostsCount;
-
-        return $chartData;
+    //user part
+    $totalUsersSql = "SELECT * FROM users";
+    $totalUsersQuery = mysqli_query($connection, $totalUsersSql);
+    $totalUsersCount = mysqli_num_rows($totalUsersQuery);
+    $chartData['usersCount'] = $totalUsersCount;
 
 
-    }
+    //comments part
+    $totalCommentsSql = "SELECT * FROM comments";
+    $totalCommentsQuery = mysqli_query($connection, $totalCommentsSql);
+    $totalCommentsCount = mysqli_num_rows($totalCommentsQuery);
+    $chartData['commentsCount'] = $totalCommentsCount;
+
+    $approvedCommentsSql = "SELECT * FROM comments WHERE status ='approved' ";
+    $approvedCommentsQuery = mysqli_query($connection, $approvedCommentsSql);
+    $approvedCommentsCount = mysqli_num_rows($approvedCommentsQuery);
+    $chartData['approvedCommentsCount'] = $approvedCommentsCount;
+
+    //posts part
+    $totalPostsSql = "SELECT * FROM posts";
+    $totalPostsQuery = mysqli_query($connection, $totalPostsSql);
+    $totalPostsCount = mysqli_num_rows($totalPostsQuery);
+    $chartData['postsCount'] = $totalPostsCount;
+
+    $publishedPostsSql = "SELECT * FROM posts WHERE status ='published' ";
+    $publishedPostsQuery = mysqli_query($connection, $publishedPostsSql);
+    $publishedPostsCount = mysqli_num_rows($publishedPostsQuery);
+    $chartData['publishedPostsCount'] = $publishedPostsCount;
+
+    return $chartData;
+
+
+}
 

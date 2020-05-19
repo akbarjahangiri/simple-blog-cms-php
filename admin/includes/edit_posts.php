@@ -73,7 +73,7 @@ $categories = allCategoriesList();
 
                 <div class="form-group">
                     <label for="title">content</label>
-                    <textarea type="text" rows="10" class="form-control" name="content" ><?php echo $post['content'] ?></textarea>
+                    <textarea type="text" rows="10" class="form-control" name="content" id="content" ><?php echo $post['content'] ?></textarea>
                 </div>
                 <div class="form-group">
                     <label for="checkbox"> publish </label>

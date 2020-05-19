@@ -56,7 +56,7 @@ if (isset($_POST['create_post'])) {
 
                 <div class="form-group">
                     <label for="title">content</label>
-                    <textarea type="text" rows="10" class="form-control" name="content"></textarea>
+                    <textarea type="text" rows="10" class="form-control" name="content" id="content"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="checkbox"> publish </label>

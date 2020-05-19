@@ -62,17 +62,23 @@ include "includes/navigation.php";
             <hr>
 
             <!-- Date/Time -->
-            <p><span class="glyphicon glyphicon-time"></span> Posted on August 24, 2013 at 9:00 PM</p>
+            <p><span class="glyphicon glyphicon-time"></span> Posted
+                on <?php echo $post['date'] ?> </p>
+
 
             <hr>
 
             <!-- Preview Image -->
-            <img class="img-responsive" src="<?php echo $post['image_path'] ?>" alt="">
+            <img class="img-responsive" src="<?php echo $post['image_path'] ?>" alt="<?php echo $post['title'] ?>">
 
             <hr>
 
             <!-- Post Content -->
             <p class="lead"><?php echo $post['content'] ?></p>
+            <hr>
+            <?php if (isset($_SESSION['auth'])) { ?>
+                <a href="admin/posts.php?source=edit&id=<?php echo $_GET['id']; ?>"><button class="btn btn-block">edit post</button></a>
+            <?php } ?>
 
             <hr>
 
@@ -117,10 +123,10 @@ include "includes/navigation.php";
                             <img class="media-object" src="http://placehold.it/64x64" alt="">
                         </a>
                         <div class="media-body">
-                            <h4 class="media-heading"><?php echo $comment['author'];?>
-                                <small><?php echo $comment['date'];?></small>
+                            <h4 class="media-heading"><?php echo $comment['author']; ?>
+                                <small><?php echo $comment['date']; ?></small>
                             </h4>
-                            <?php echo $comment['content'];?>
+                            <?php echo $comment['content']; ?>
                         </div>
                     </div>
                     <?php

@@ -2,7 +2,6 @@
 <?php
 include "includes/header.php";
 include "includes/db.php";
-session_start();
 ?>
 
 <body>
@@ -48,7 +47,7 @@ include "includes/navigation.php";
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span><?php echo $date; ?></p>
                 <hr>
-                <img class="img-responsive"  src="<?php echo $image?>" alt="<?php echo $title.' image'?>">
+                <a href="<?php echo 'post.php?id='.$post_id; ?>"> <img class="img-responsive"  src="<?php echo $image?>" alt="<?php echo $title.' image'?>"></a>
                 <hr>
                 <p><?php echo $content ; ?></p>
                 <a class="btn btn-primary" href="<?php echo 'post.php?id='.$post_id; ?>">Read More <span
