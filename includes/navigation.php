@@ -30,16 +30,18 @@
                     <a href="#">Services</a>
                 </li>
                 <li>
-                    <a href="#" >Contact</a>
+                    <a href="#">Contact</a>
                 </li>
             </ul>
-            <ul  class="nav navbar-nav pull-right"><?php if (isset($_SESSION['auth'])){
-                ?>
+            <ul class="nav navbar-nav pull-right"><?php if (isset($_SESSION['auth'])) {
+                    ?>
                     <li>
                         <a href="admin">admin</a>
                     </li>
                     <?php
-                } ?></ul>
+                }else{ ?> <li>
+                    <a href="register.php">Register</a>
+                </li><?php }?></ul>
         </div>
         <!-- /.navbar-collapse -->
     </div>

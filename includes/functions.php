@@ -107,3 +107,18 @@ function userDataByUsername($username)
     return $user;
 
 }
+
+function registerUser()
+{
+    global $connection;
+    $username = $_POST['username'];
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $email = $_POST['email'];
+    $password = password_hash($_POST['password'],PASSWORD_DEFAULT);
+    $sql = "INSERT INTO users(username,firstname,lastname,email,password,role,image_path) ";
+    $sql .= "VALUES('$username','$firstname','$lastname','$email','$password','user','')";
+
+    mysqli_query($connection,$sql);
+    echo "user registered successfully!";
+}
