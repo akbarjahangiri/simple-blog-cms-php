@@ -30,7 +30,6 @@ include "includes/navigation.php";
         echo $_SESSION['sql'];
     }
     if (isset($_POST['submit_comment'])) {
-        echo "Dada";
 
 //    echo $_GET['id'];
 //    echo $_POST['email'];

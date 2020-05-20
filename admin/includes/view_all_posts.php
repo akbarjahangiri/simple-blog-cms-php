@@ -53,7 +53,7 @@
             echo "<td><input type='checkbox' value='" . $post['id'] . "' name='postCheckBox[]'></td>";
             echo "<td>" . $post['id'] . "</td>";
             echo "<td>" . $post['category_id'] . "</td>";
-            echo "<td>" . $post['title'] . "</td>";
+            echo "<td> <a href='../post.php?id=".$post['id']."'>" . $post['title'] . "</a></td>";
             echo "<td >" . $post['author'] . "</td>";
             echo "<td class='td-word-break'>" . $post['content'] . "</td>";
             echo "<td>" . $post['tags'] . "</td>";

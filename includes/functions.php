@@ -65,10 +65,9 @@ function createComment()
 
 
         $createComment = mysqli_query($connection, $sql);
-        $_SESSION['sql'] = "sql error" . mysqli_error($connection);
+
         //selecting post from DB to change comment count
-        $postSql = "UPDATE posts SET comment_count+1 WHERE id = $postId";
-        $postQuery = mysqli_query($connection, $postSql);
+
         header('Location: ' . $_SERVER['HTTP_REFERER']);
 
     }

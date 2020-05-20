@@ -293,7 +293,6 @@ function editPost()
         } else {
             $image_path = "../" . $oldPostData['image_path'];
         }
-        $comment_count = 4;
         $status = 'draft';
         $update_post_query = "UPDATE  posts SET title='$title', tags='$tags', category_id=$category_id, content='$content', image_path='$image_path' WHERE id=$id ";
         $updateQuery = mysqli_query($connection, $update_post_query);
@@ -345,12 +344,34 @@ function allComments()
     return $comments;
 }
 
+//return comment data by id
+function commentData($id)
+{
+    global $connection;
+    $comment =array();
+    $sql = "SELECT * FROM comments WHERE id=$id";
+    $commentQuery = mysqli_query($connection, $sql);
+    if (mysqli_num_rows($commentQuery)>0){
+        while($row = mysqli_fetch_assoc($commentQuery)){
+            $comment = $row;
+        }
+    }
+    return $comment;
+}
+
 //approve comment
 function approveComment($id)
 {
     global $connection;
+    $commentData = commentData($id);
+    $post_id = $commentData['post_id'];
+
     $sql = "UPDATE comments SET status = 'approved' WHERE id = $id ";
     $approveQuery = mysqli_query($connection, $sql);
+
+    $postSql = "UPDATE posts SET comment_count = comment_count+1 WHERE id = $post_id";
+    $postQuery = mysqli_query($connection, $postSql);
+
     header('Location: ' . $_SERVER['HTTP_REFERER']);
 }
 
@@ -358,8 +379,15 @@ function approveComment($id)
 function unapproveComment($id)
 {
     global $connection;
+    $commentData = commentData($id);
+    $post_id = $commentData['post_id'];
+
     $sql = "UPDATE comments SET status = 'unapproved' WHERE id = $id ";
-    $approveQuery = mysqli_query($connection, $sql);
+    $unapproveQuery = mysqli_query($connection, $sql);
+
+    $postSql = "UPDATE posts SET comment_count = comment_count-1 WHERE id = $post_id";
+    $postQuery = mysqli_query($connection, $postSql);
+
     header('Location: comments.php');
 }
 
